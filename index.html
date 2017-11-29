@@ -1,0 +1,137 @@
+<!-- Your ParkWhiz API key is f7b2b035fff3071079e73edd3d9e42924c0c0eeb.
+https://api.eventful.com/json/events/search?keywords=books&location=San+Diego&date=Future&app_key=FJQT56r7DBrkQKgc -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<title>RPS-Multiplayer</title>
+	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	
+</head>
+
+<body>
+	<button>Submit</button>
+	<div id="event">
+	</div>
+	<div id="parking">
+	</div>
+	<div id="longitude&latitude">
+	</div>
+	<script>
+
+//---------------------------------- coordinate examples
+		// var queryURL ="https://api.parkwhiz.com/v4/quotes/?q=coordinates:41.881943,-87.630976&start_time=2015-11-22T16:35:28-06:00&end_time=2015-11-22T19:35:44-06:00&API"
+		// $.ajax({
+		// 	method:"GET",
+		// 	url: queryURL
+		// }).done(function(response){
+		// 	console.log(response);
+		// })
+//-----------------------------------eventful austin
+var param_address;
+var lat;
+var long;
+var latitude;
+var longitude;
+		var queryURL = "https://api.eventful.com/json/events/search?keywords=books&location=Oregon&date=Future&app_key=FJQT56r7DBrkQKgc"
+
+	    $.ajax({
+
+	      url: queryURL,
+	      method: "GET",
+	      dataType: "jsonp"
+	    }).done(function(response) {
+
+	    	console.log(response);
+	    	// var address =response.events.event[0].venue_address;
+	    	// address = address.replace(/ /g, "+");
+		    var city=response.events.event[0].city_name
+		    var postal_code = response.events.event[0].postal_code
+		    // var state = response.events.event[0].region_abbr
+	    	// param_address = (address+",+"+city+",+"+state);
+	    	param_address = city;
+	    	console.log(param_address);   
+
+//------------------------------------------- GEOCODE
+
+	    	var qURL="https://maps.googleapis.com/maps/api/geocode/json?address="+param_address+"&key=AIzaSyACTToJ83QeuxyB1XttdgZ1MaVTMZSEoWg"
+
+	    	$.ajax({
+	    		url:qURL,
+	    		method:"GET"
+	    	}).done(function(response){
+	    		console.log(response);
+	    		lat = response.results[0].geometry.location.lat;
+	    		long = response.results[0].geometry.location.lng;
+	    		latitude = lat.toString();
+	    		longitude = long.toString().slice(0,-1);
+	    		console.log(latitude);
+	    		console.log(longitude);
+//---------------------------------------------PARKWHIZ
+
+	    		var url ="http://api.parkwhiz.com/v4/quotes/?q=coordinates:"+lat+","+long+"&start_time=2017-12-01T12:00&end_time=2017-12-01T20:00&api_key=f7b2b035fff3071079e73edd3d9e42924c0c0eeb"
+					$.ajax({
+						url: url,
+						method:"GET",
+					}).done(function(response){
+					console.log(response);
+					})
+
+	    	});
+	   });
+
+	    
+
+//-----------------------GEO CODE---------------------------;
+
+
+
+	// var url ="http://api.parkwhiz.com/v4/quotes/?q=coordinates:30.267153,-97.743060&start_time=2017-12-01T12:00&end_time=2017-12-01T20:00&api_key=f7b2b035fff3071079e73edd3d9e42924c0c0eeb"
+	// 				$.ajax({
+	// 					url: url,
+	// 					method:"GET",
+	// 				}).done(function(response){
+	// 				console.log(response);
+	// 				});
+
+
+//----------------------------------- this is for austin parking
+	 
+	</script>
+</body>
+</html>
+
+
+<!-- http://api.parkwhiz.com/v4/quotes/?q=coordinates:30.2954282,-97.743735&start_time=2017-12-01T12:00&end_time=2017-12-01T20:00&api_key=f7b2b035fff3071079e73edd3d9e42924c0c0eeb
+
+
+http://api.parkwhiz.com/venue/search/?lat=30.2954282&lng=-97.743735&key=62d882d8cfe5680004fa849286b6ce20 -->
+
+
+
+<!-- http://api.parkwhiz.com/v4/quotes/?q=coordinates:30.295428,-97.743735&start_time=2017-12-01T12:00&end_time=2017-12-01T20:00&api_key=f7b2b035fff3071079e73edd3d9e42924c0c0eeb -->
+
+
+<!-- var queryURL ="http://api.parkwhiz.com/v4/quotes/?q=coordinates:30.2969,-97.7373&start_time=2017-12-01T12:00&end_time=2017-12-01T20:00&api_key=f7b2b035fff3071079e73edd3d9e42924c0c0eeb"
+					$.ajax({
+						method:"GET",
+						url: queryURL
+					}).done(function(response){
+						console.log(response);
+					})
+ -->
+
+
+
+
+
+
+
+<!-- AIzaSyC_leOClv7j3P_0j7gYOa5y8TUBCpEN4us -->
+<!-- 30.267153 -->
+<!-- -97.743061 -->
+
+<!-- https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=AIzaSyC_leOClv7j3P_0j7gYOa5y8TUBCpEN4us
